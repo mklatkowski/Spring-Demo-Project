@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns: th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name ="viewport" content="width=device-width, initial-scale = 1.0">
+  <title>Grupy</title>
+  <link rel = "stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_big-stone.min.css">
+  <style>
+    .Bd {
+      border: solid 2px blue;
+    }
+
+    .P\(0\){
+      padding: 0;
+    }
+    .P\(10px\){
+      padding: 10px;
+    }
+    .C\(red\){
+      border-color: red !important;
+    }
+    .C\(redF\){
+      color: red;
+    }
+  </style>
+
+</head>
+<body>
+<main>
+  <h1 th:if="${message !=null}" th:text = "${message}"></h1>
+  <!--/*@thymesVar id="group" type="mklatkowski.learningApp.model.WordGroup"*/-->
+  <form action="#" method = "post" th:action = "@{/groups}" th:object="${group}">
+    <p class="C(redF)" th:if="${#fields.hasAnyErrors()}" th:errors="*{all}"></p>
+    <fieldset>
+      <legend>
+        Utwórz nową grupę
+      </legend>
+      <label>Nazwa
+        <input type = "text" th:field="*{name}" th:errorclass="'C(red)'"/>
+      </label>
+
+    </fieldset>
+    <p>
+      <button type="submit"> Dodaj</button>
+      <button type="reset"> Wyczyść</button>
+    </p>
+  </form>
+  <!--/*@thymesVar id="groups" type="mklatkowski.learningApp.model.WordGroup"*/-->
+  <ul><dt th:each ="group : ${groups}" class = "P(10px)">
+    <a th:href="@{/groups/{id}(id=${group.id})}">
+    <h3><li><span th:text="${group.name}"> ... </span></h3>
+      <h5>Ratio: <span th:text="${group.ratio}"></span>%</h5>
+    </a>
+    </li>
+  </dt>
+  </ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns: th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name ="viewport" content="width=device-width, initial-scale = 1.0">
+  <title>Lista słów</title>
+  <link rel = "stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_big-stone.min.css">
+  <style>
+    .Bd {
+      border: solid 2px blue;
+    }
+
+    .P\(0\){
+      padding: 0;
+    }
+    .P\(10px\){
+      padding: 10px;
+    }
+    .C\(red\){
+      border-color: red !important;
+    }
+    .C\(redF\){
+      color: red;
+    }
+  </style>
+
+</head>
+<body>
+<main>
+  <h1 th:if="${message !=null}" th:text = "${message}"></h1>
+  <!--/*@thymesVar id="word" type="mklatkowski.learningApp.model.Word"*/-->
+  <form action="#" method = "post" th:action = "@{/words}" th:object="${word}">
+    <p class="C(redF)" th:if="${#fields.hasAnyErrors()}" th:errors="*{all}"></p>
+    <fieldset>
+      <legend>
+        Dodaj słowo
+      </legend>
+      <label>Słowo
+        <input type = "text" th:field="*{foreignMeaning}" th:errorclass="'C(red)'"/>
+      </label>
+      <label>Tłumaczenie
+        <input type = "text" th:field="*{localMeaning}" th:errorclass="'C(red)'"/>
+      </label>
+
+      <select th:field="*{group}" name="groups">
+        <option th:each="group : ${groupsToChoose}" th:text="${group.name}" th:value="${group.id}"/>
+      </select>
+
+
+    </fieldset>
+    <p>
+      <button type="submit"> Dodaj</button>
+      <button type="reset"> Wyczyść</button>
+    </p>
+  </form>
+  <!--/*@thymesVar id="words" type="mklatkowski.learningApp.model.Word"*/-->
+  <br>
+  <span th:each ="word : ${words}" class = "P(10px)">
+    <a th:href="@{/words/{id}(id=${word.id})}">
+      <input type="checkbox" disabled name="mycheckbox" th:checked="${word.done} ? 'checked'">
+      <span th:text="${word.foreignMeaning}">...</span>
+<!--      <span th:text="${word.localMeaning}"> ... </span>-->
+      <br>
+    </a>
+  </span>
+</main>
+</body>
+</html>

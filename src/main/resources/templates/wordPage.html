@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns: th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name ="viewport" content="width=device-width, initial-scale = 1.0">
+  <title>Słowo</title>
+  <link rel = "stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_big-stone.min.css">
+  <style>
+    .Bd {
+      border: solid 2px blue;
+    }
+
+    .P\(0\){
+      padding: 0;
+    }
+    .P\(10px\){
+      padding: 10px;
+    }
+    .C\(red\){
+      border-color: red !important;
+    }
+    .C\(redF\){
+      color: red;
+    }
+  </style>
+
+</head>
+<body>
+<main>
+  <h1 th:if="${message !=null}" th:text = "${message}"></h1>
+
+  <!--/*@thymesVar id="groups" type="mklatkowski.learningApp.model.Word"*/-->
+    <h1 th:if="${singleWord == null}"></h1>
+    <span th:unless="${singleWord == null}">
+      <dl th:object ="${singleWord}" class = "P(10px)">
+        <h1><dt th:text="${singleWord.foreignMeaning}"> ... </dt></h1>
+        <h3><dt th:text="${singleWord.localMeaning}"> ... </dt></h3>
+        <br>
+        <span th:if="${singleWord.group} == null">
+          <h4>Grupa: nie przypisana</h4>
+        </span>
+        <span th:unless="${singleWord.group} == null">
+          <h4>Grupa: <dt th:text="${singleWord.group.name}"> ... </dt></h4>
+        </span>
+        <span th:if="${singleWord.done}==true">
+          <form action="#" method = "post" th:action = "@{/words/{id}(id=${singleWord.id})}" th:object="${singleWord}">
+          <input type="checkbox" disabled name="mycheckbox" th:checked="*{done} ? 'checked'">
+        <button type="submit">Zmień na: Jednak nie umiem</button></form>
+        </span>
+
+        <span th:unless="${singleWord.done}==true">
+        <form action="#" method = "post" th:action = "@{/words/{id}(id=${singleWord.id})}" th:object="${singleWord}">
+          <input type="checkbox" disabled name="mycheckbox" th:checked="*{done} ? 'checked'">
+        <button type="submit">Zmień na: Umiem</button></form>
+        </span>
+      </dl>
+    </span>
+</main>
+</body>
+</html>

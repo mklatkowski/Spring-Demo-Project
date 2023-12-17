@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns: th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name ="viewport" content="width=device-width, initial-scale = 1.0">
+    <title>Grupa</title>
+    <link rel = "stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_big-stone.min.css">
+    <style>
+        .Bd {
+            border: solid 2px blue;
+        }
+
+        .P\(0\){
+            padding: 0;
+        }
+        .P\(10px\){
+            padding: 10px;
+        }
+        .C\(red\){
+            border-color: red !important;
+        }
+        .C\(redF\){
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+<main>
+    <h1 th:if="${message !=null}" th:text = "${message}"></h1>
+    <!--/*@thymesVar id="group" type="mklatkowski.learningApp.model.WordGroup"*/-->
+
+    <dl th:object ="${singleGroup}"></dl>
+
+    <h1><span th:text="${singleGroup.name}"></span></h1>
+    <h3>Ratio: <span th:text="${singleGroup.ratio}"></span>%</h3>
+    <br>
+    <span th:each ="word : ${wordlist}" class = "P(0)">
+        <a th:href="@{/words/{id}(id=${word.id})}">
+            <input type="checkbox" disabled name="mycheckbox" th:checked="${word.done} ? 'checked'">
+        <h5><span th:text="${word.localMeaning}"> ... </span></h5>
+        <h5><span th:text="${word.foreignMeaning}">...</span></h5>
+            <br>
+        </a>
+    </span>
+</main>
+</body>
+</html>
